@@ -80,6 +80,8 @@ def main(name: str, parameterized):
     # Find a collateral UTxO
     non_nft_utxo = None
     for utxo in context.utxos(payment_address):
+        print(utxo.output.amount.coin)
+        print(utxo.output.amount.multi_asset)
         # multi_asset should be empty for collateral utxo
         if not utxo.output.amount.multi_asset and utxo.output.amount.coin >= 5000000:
             non_nft_utxo = utxo

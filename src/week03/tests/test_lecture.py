@@ -5,7 +5,6 @@ from src.week03 import lecture_dir
 
 python_files = [
     "vesting.py",
-    "parameterized_vesting.py",
 ]
 script_paths = [str(lecture_dir.joinpath(f)) for f in python_files]
 
