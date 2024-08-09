@@ -4,7 +4,7 @@ from opshin import compiler
 from src.week03 import lecture_dir
 
 python_files = [
-    "vesting.py",
+    "certificate.py",
 ]
 script_paths = [str(lecture_dir.joinpath(f)) for f in python_files]
 

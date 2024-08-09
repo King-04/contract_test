@@ -14,7 +14,6 @@ from src.utils import get_address, get_signing_info, get_chain_context
 from src.week03 import assets_dir, lecture_dir
 
 
-
 @click.command()
 @click.argument("name")
 @click.argument("beneficiary")
@@ -24,7 +23,6 @@ from src.week03 import assets_dir, lecture_dir
     default=8000000,
     help="Amount of lovelace to send to the beneficiary address.",
 )
-
 def main(name: str, beneficiary: str, amount: int):
     # Load chain context
     context = get_chain_context()
