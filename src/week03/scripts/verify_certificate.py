@@ -1,11 +1,9 @@
-import time
-
 import click
 from pycardano import Address, TransactionBuilder, UTxO, PlutusV2Script, plutus_script_hash, Redeemer, \
     VerificationKeyHash, RawPlutusData, RawCBOR
 from src.utils import get_address, get_signing_info, network, get_chain_context
 from src.week03 import assets_dir
-from src.week03.lecture.certificate import VestingParams
+from src.week03.lecture.certificate import VestingParams, validate_secret
 
 
 @click.command()
@@ -52,7 +50,7 @@ def main(name: str, secret: str, parameterized: bool):
                     continue
                 if (
                         params.beneficiary == bytes(payment_address.payment_part)
-                        and params.deadline < time.time() * 1000
+                        and validate_secret(params.secret, secret.encode('utf-8'))
                 ):
                     utxo_to_spend = utxo
                     break
@@ -81,6 +79,7 @@ def main(name: str, secret: str, parameterized: bool):
     signed_tx = builder.build_and_sign(signing_keys=[payment_skey], change_address=payment_address)
     context.submit_tx(signed_tx)
 
+    print("Certificate is valid !!")
     print(f"transaction id: {signed_tx.id}")
     print(f"Cardanoscan: https://preview.cexplorer.io/tx/{signed_tx.id}")
 

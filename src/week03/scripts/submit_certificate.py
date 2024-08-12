@@ -13,15 +13,14 @@ from src.utils import get_address, get_signing_info, get_chain_context
 from src.week03 import assets_dir, lecture_dir
 from src.week03.lecture.certificate import VestingParams
 
-@click.command()
 
+@click.command()
 @click.argument("name")
 @click.argument("beneficiary")
 @click.argument("secret")  # Added secret string as an argument
 @click.option("--amount", type=int, default=3000000, help="Amount of lovelace to send to the script address.")
-@click.option("--wait_time", type=int, default=0, help="Time to wait in seconds for the validation to succeed.")
 @click.option("--parameterized", is_flag=True, help="If set, use parameterized vesting script.")
-def main(name: str, beneficiary: str, secret: str, amount: int, wait_time: int, parameterized: bool):
+def main(name: str, beneficiary: str, secret: str, amount: int, parameterized: bool):
     context = get_chain_context()
     payment_address = get_address(name)
     beneficiary_address = get_address(beneficiary)
@@ -29,7 +28,6 @@ def main(name: str, beneficiary: str, secret: str, amount: int, wait_time: int, 
 
     params = VestingParams(
         beneficiary=bytes(vkey_hash),
-        deadline=int(time.time() + wait_time) * 1000,
         secret=secret.encode('utf-8')  # Store the secret as bytes
     )
 
@@ -62,6 +60,7 @@ def main(name: str, beneficiary: str, secret: str, amount: int, wait_time: int, 
 
     print(f"transaction id: {signed_tx.id}")
     print(f"Cardanoscan: https://preview.cexplorer.io/tx/{signed_tx.id}")
+
 
 if __name__ == "__main__":
     main()
