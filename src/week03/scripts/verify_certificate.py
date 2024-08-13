@@ -27,11 +27,12 @@ def main(name: str, secret: str, parameterized: bool):
 
     payment_address = get_address(name)
 
-    utxo_to_spend = None
+    # utxo_to_spend = None
+    reference_utxo = None
     for utxo in context.utxos(script_address):
         if utxo.output.datum:
             if parameterized:
-                utxo_to_spend = utxo
+                reference_utxo = utxo
                 break
             else:
                 if isinstance(utxo.output.datum, RawPlutusData):
@@ -48,33 +49,48 @@ def main(name: str, secret: str, parameterized: bool):
                     params = utxo.output.datum
                 else:
                     continue
-                if (
-                        params.beneficiary == bytes(payment_address.payment_part)
-                        and validate_secret(params.secret, secret.encode('utf-8'))
-                ):
-                    utxo_to_spend = utxo
+                # if (
+                #         params.beneficiary == bytes(payment_address.payment_part)
+                #         and validate_secret(params.secret, secret.encode('utf-8'))
+                # ):
+                #     utxo_to_spend = utxo
+                #     break
+                if validate_secret(params.secret, secret.encode('utf-8')):
+                    reference_utxo = utxo
                     break
 
-    assert isinstance(utxo_to_spend, UTxO), "No script UTxOs found!"
+    assert isinstance(reference_utxo, UTxO), "No script UTxOs found!"
 
-    non_nft_utxo = None
-    for utxo in context.utxos(payment_address):
-        if not utxo.output.amount.multi_asset and utxo.output.amount.coin >= 5000000:
-            non_nft_utxo = utxo
-            break
-    assert isinstance(non_nft_utxo, UTxO), "No collateral UTxOs found!"
+    # No need to consume any UTxO; just verify the secret string using the reference UTxO.
+    # non_nft_utxo = None
+    # for utxo in context.utxos(payment_address):
+    #     if not utxo.output.amount.multi_asset and utxo.output.amount.coin >= 5000000:
+    #         non_nft_utxo = utxo
+    #         break
+    # assert isinstance(non_nft_utxo, UTxO), "No collateral UTxOs found!"
 
-    redeemer = Redeemer(secret.encode('utf-8'))  # Pass the secret as the redeemer
+    # redeemer = Redeemer(secret.encode('utf-8'))  # Pass the secret as the redeemer
 
     builder = TransactionBuilder(context)
-    builder.add_script_input(utxo_to_spend, script=plutus_script, redeemer=redeemer)
-    builder.collaterals.append(non_nft_utxo)
+    builder.reference_inputs.add(reference_utxo)  # Use the reference UTxO without consuming it
+    # builder.add_script_input(utxo_to_spend, script=plutus_script, redeemer=redeemer)
+    # builder.collaterals.append(non_nft_utxo)
+
+    # Explicitly add UTxOs from the payment address to ensure sufficient funds
+    utxos = context.utxos(payment_address)
+    for utxo in utxos:
+        builder.add_input(utxo)  # Add UTxOs to the builder to cover transaction fees
+
+    # Set the required signers
     vkey_hash: VerificationKeyHash = payment_address.payment_part
     builder.required_signers = [vkey_hash]
+
+    # Set the validity range and time-to-live (TTL) for the transaction
     builder.validity_start = context.last_block_slot
     num_slots = 60 * 60 // context.genesis_param.slot_length
     builder.ttl = builder.validity_start + num_slots
 
+    # Sign and submit the transaction
     payment_vkey, payment_skey, payment_address = get_signing_info(name)
     signed_tx = builder.build_and_sign(signing_keys=[payment_skey], change_address=payment_address)
     context.submit_tx(signed_tx)
