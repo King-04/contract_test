@@ -15,23 +15,22 @@ from src.week03.lecture.certificate import VestingParams
 
 @click.command()
 @click.argument("name")
-@click.argument("beneficiary")
 @click.argument("secret")  # Added secret string as an argument
 @click.option("--amount", type=int, default=3000000, help="Amount of lovelace to send to the script address.")
 @click.option("--parameterized", is_flag=True, help="If set, use parameterized vesting script.")
-def main(name: str, beneficiary: str, secret: str, amount: int, parameterized: bool):
+def main(name: str, secret: str, amount: int, parameterized: bool):
     context = get_chain_context()
     payment_address = get_address(name)
-    beneficiary_address = get_address(beneficiary)
-    vkey_hash: VerificationKeyHash = beneficiary_address.payment_part
+    # beneficiary_address = get_address(beneficiary)
+    # vkey_hash: VerificationKeyHash = beneficiary_address.payment_part
 
     params = VestingParams(
-        beneficiary=bytes(vkey_hash),
+        # beneficiary=bytes(vkey_hash),
         secret=secret.encode('utf-8')  # Store the secret as bytes
     )
 
     if parameterized:
-        save_path = assets_dir.joinpath(f"parameterized_vesting_{beneficiary}")
+        save_path = assets_dir.joinpath(f"parameterized_vesting_{name}")
         script_path = lecture_dir.joinpath("parameterized_vesting.py")
         subprocess.run(
             ["opshin", "-o", str(save_path), "build", "spending", str(script_path), params.to_json()],
