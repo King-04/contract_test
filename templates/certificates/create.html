@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Certificate</title>
+  <script src="/static/js/form_script.js"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+  {% include 'header.html' %}
+  <h1>Create a Certificate</h1>
+  <div class="certify-page-background">
+    <div class="certify-form-container">
+      <h1 class="certify-form-title">CertifyCDNO</h1>
+      <h2 class="certify-form-subtitle">Fill in the details</h2>
+      <form class="certify-form" id="certifyForm" action="{{ url_for('submit_form') }}" method="post">
+        <input type="text" class="certify-input" name="certificate_name" placeholder="CERTIFICATE NAME" required>
+        <textarea class="certify-textarea" name="certificate_description" placeholder="CERTIFICATE DESCRIPTION" required></textarea>
+        <input type="text" class="certify-input" name="issuer_information" placeholder="ISSUER INFORMATION" required>
+        <input type="text" class="certify-input" name="recipient_name" placeholder="RECIPIENT NAME" required>
+        <input type="text" class="certify-input" name="recipient_id" placeholder="RECIPIENT ID" required>
+        <input type="text" class="certify-input" name="validity_period" placeholder="VALIDITY PERIOD" required>
+        <button type="submit" class="certify-submit-btn">SUBMIT</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="popupOverlay" class="popup-overlay">
+      <div class="popup-content">
+          <h3>Form Submitted</h3>
+          <p id="popupMessage"></p>
+          <button id="closePopup" class="certify-submit-btn">Close</button>
+      </div>
+  </div>
+
+    <script src="{{ url_for('static', filename='js/form_script.js') }}"></script>
+
+  {% include 'footer.html' %}
+</body>
+</html>

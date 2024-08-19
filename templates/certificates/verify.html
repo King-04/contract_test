@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Certificate</title>
+  <script src="/static/js/form_script.js"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+  {% include 'header.html' %}
+  <h1>Verify a Certificate</h1>
+  <div class="certify-page-background">
+    <div class="certify-form-container">
+      <h1 class="certify-form-title">CertifyCDNO</h1>
+      <h2 class="certify-form-subtitle">First enter your user or recipient ID</h2>
+      <form method="post" class="certify-form" action="{{ url_for('verify') }}">
+        <input type="text" id="recipient_id" name="recipient_id" required class="certify-input" placeholder="RECIPIENT ID">
+        <button type="submit" class="certify-submit-btn">SUBMIT</button>
+      </form>
+    </div>
+  </div>
+  {% include 'footer.html' %}
+</body>
+</html>
