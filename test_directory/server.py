@@ -57,7 +57,6 @@ def build_transaction(data):
         builder = TransactionBuilder(chain_context)
         builder.add_input_address(sender_address)
         builder.add_output(TransactionOutput(recipient_address, amount, datum=datum))
-        # builder.add_output(TransactionOutput(recipient_address, amount))
 
         tx_body = builder.build(change_address=change_address)
         tx = Transaction(tx_body, TransactionWitnessSet())
