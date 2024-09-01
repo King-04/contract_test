@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Certificate</title>
-  <script src="/static/js/form_script.js"></script>
   <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
@@ -13,13 +12,19 @@
   <div class="certify-page-background">
     <div class="certify-form-container">
       <h1 class="certify-form-title">CertifyCDNO</h1>
-      <h2 class="certify-form-subtitle">First enter your user or recipient ID</h2>
-      <form method="post" class="certify-form" action="{{ url_for('verify') }}">
-        <input type="text" id="recipient_id" name="recipient_id" required class="certify-input" placeholder="RECIPIENT ID">
-        <button type="submit" class="certify-submit-btn">SUBMIT</button>
+      <h2 class="certify-form-subtitle">Enter your certificate hash</h2>
+      <!--<form method="post" id="verifyForm" class="certify-form" action="{{ url_for('verify') }}">-->
+      <form id="verifyForm" class="certify-form" >
+        <button type="button" id="connectWallet" class="btn btn-primary">Connect Nami Wallet</button>
+        <input type="text" id="secret" name="secret" required class="certify-input" placeholder="RECIPIENT ID">
+        <button type="submit" id="submitTx" class="certify-submit-btn" disabled>SUBMIT</button>
       </form>
     </div>
   </div>
+  <div id="result"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
   {% include 'footer.html' %}
 </body>
 </html>

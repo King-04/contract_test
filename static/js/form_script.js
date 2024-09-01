@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const popupMessage = document.getElementById('popupMessage');
     const connectWalletButton = document.getElementById('connectWallet');
     const submitTxButton = document.getElementById('submitTx');
+
     let connected = false;
     let recipientItem = null;
 

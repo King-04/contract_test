@@ -19,7 +19,7 @@ block_forst_project_id = os.getenv("BLOCKFROST_PROJECT_ID")
 chain_context = BlockFrostChainContext(block_forst_project_id, base_url="https://cardano-preview.blockfrost.io/api")
 
 
-def build_transaction(data):
+def build_ver_transaction(data):
     context = get_chain_context()
 
     try:
@@ -105,7 +105,7 @@ def build_transaction(data):
         raise e
 
 
-def compose_tx_and_witness(data):
+def compose_ver_tx_and_witness(data):
     try:
         tx = Transaction.from_cbor(bytes.fromhex(data["tx"]))
         witness = TransactionWitnessSet.from_cbor(bytes.fromhex(data["witness"]))
@@ -121,10 +121,10 @@ def home_page():
     return render_template("index.html")
 
 
-@app.route("/build_tx", methods=["POST"])
-def build_tx():
+@app.route("/build_ver_tx", methods=["POST"])
+def build_ver_tx():
     try:
-        tx = build_transaction(request.json)
+        tx = build_ver_transaction(request.json)
         cbor_hex = tx.to_cbor().hex()  # Convert bytes to hex string
         print(f"Transaction CBOR (hex): {cbor_hex}")
         return {"tx": cbor_hex}
@@ -133,9 +133,9 @@ def build_tx():
         return {"error": str(e)}, 500
 
 
-@app.route("/submit_tx", methods=["POST"])
-def submit_tx():
-    tx = compose_tx_and_witness(request.json)
+@app.route("/submit_ver_tx", methods=["POST"])
+def submit_ver_tx():
+    tx = compose_ver_tx_and_witness(request.json)
     tx_id = tx.transaction_body.hash().hex()
     print(f"Transaction: \n {tx}")
     print(f"Transaction cbor: {tx.to_cbor()}")
