@@ -50,7 +50,17 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(response => response.json())
-        .then(signTx)
+        //.then(signTx)
+        //.catch(error => console.error('Error:', error));
+        .then(data => {
+            if (data.error) {
+                // Display the error message in the result div
+                // document.getElementById('result').innerText = data.error;
+                document.getElementById('result').innerText = "Sorry, no certificate with this hash is on-chain";
+            } else {
+                signTx(data);
+            }
+        })
         .catch(error => console.error('Error:', error));
     }
 
@@ -74,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             alert("Transaction: " + data.tx_id + " submitted!");
-            document.getElementById('result').innerText = "Transaction ID: " + data.tx_id;
+            document.getElementById('result').innerText = "This hash has a certificate on-chain. \n \n Transaction ID: " + data.tx_id;
         })
         .catch(error => console.error('Error:', error));
     }
