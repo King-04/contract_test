@@ -34,6 +34,23 @@
         "recipient_name": "spongebob squarepants",
         "recipient_id": "10101",
         "validity_period": "2024-2048"
+    },
+    "90135aaa419653f36e4514b2315c3a254a914a1aebf6a6fbe636d266d18eca15": {
+        "timestamp": "2024-09-04T10:24:40.255682",
+        "certificate_name": "Data Analytics",
+        "certificate_description": "Cert for Data Analytics course completion",
+        "issuer_information": "CertifyCDNO",
+        "recipient_name": "Jake Andy",
+        "recipient_id": "110011",
+        "validity_period": "2024-2048"
+    },
+    "d74b13e13fd263a806e73be093b295dfb5e92eb85823ed61285ca61b699d58ff": {
+        "timestamp": "2024-09-04T10:40:25.403166",
+        "certificate_name": "Biological Sciences",
+        "certificate_description": "Certificate of Completion of biological Sciences ",
+        "issuer_information": "CertifyCDNO",
+        "recipient_name": "Reilly Otto",
+        "recipient_id": "12345",
+        "validity_period": "2024-2048"
     }
 }
-

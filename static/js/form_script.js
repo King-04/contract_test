@@ -46,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let message = `${data.message}\n\n`;
             message += `Certificate: ${data.details.certificate_name}\n`;
             message += `Recipient: ${data.details.recipient_name}\n`;
-            message += `ID: ${data.details.recipient_id}`;
+            message += `ID: ${data.details.recipient_id}\n`;
+            message += `Copy CERTIFICATE HASH: ${data.details.certificate_hash}`;
+
 
             popupMessage.textContent = message;
             popup.style.display = 'flex';

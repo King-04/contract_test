@@ -15,7 +15,7 @@ from pycardano import (
     PlutusV2Script,
     plutus_script_hash,
     VerificationKeyHash,
-    RawPlutusData, 
+    RawPlutusData,
     RawCBOR,
 )
 from src.utils import network, get_chain_context
@@ -104,9 +104,11 @@ def submit_form():
                 "certificate_name": certificate_name,
                 "recipient_name": recipient_name,
                 "recipient_id": recipient_id,
+                "certificate_hash": entry_hash,
                 'tx_hash': tx_hash,
             }
         }), 200
+
 
 # routes for submitting certs
 @app.route("/build_tx", methods=["POST"])
@@ -135,6 +137,7 @@ def submit_tx():
     print(f"Transaction ID: {tx_id}")
     chain_context.submit_tx(tx.to_cbor())
     return {"tx_id": tx_id}
+
 
 # routes for verifying certs
 @app.route("/build_ver_tx", methods=["POST"])
@@ -236,6 +239,7 @@ def generate_hash(recipient_id, certificate_name):
     data_to_hash = f"{recipient_id}|{certificate_name}"
     # Create SHA-256 hash
     return hashlib.sha256(data_to_hash.encode()).hexdigest()
+
 
 # functions for verifying
 def build_ver_transaction(data):
