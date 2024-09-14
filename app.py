@@ -29,7 +29,7 @@ app = Flask(__name__)
 
 app.secret_key = os.getenv("SECRET_KEY")
 
-# Retrieve BLOCKFROST_ID from environment variables bb
+# Retrieve BLOCKFROST_ID from environment variables
 block_forst_project_id = os.getenv("BLOCKFROST_PROJECT_ID")
 
 # Use BlockFrostChainContext for simplicity.
