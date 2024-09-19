@@ -35,7 +35,7 @@ block_forst_project_id = os.getenv("BLOCKFROST_PROJECT_ID")
 # Use BlockFrostChainContext for simplicity.
 chain_context = BlockFrostChainContext(block_forst_project_id, base_url="https://cardano-preview.blockfrost.io/api")
 
-AMOUNT_IN_ADA = 3  # Replace with the actual amount in ADA
+AMOUNT_IN_ADA = 3  # Replace later with the actual amount in ADA
 
 
 @app.route('/')
