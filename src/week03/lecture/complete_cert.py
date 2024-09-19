@@ -28,7 +28,7 @@ def issue_certificate(datum: VestingParams, context: ScriptContext) -> None:
     datum.valid = True  # Mark the certificate as valid
 
 
-# Certificate revocation function (requires multisig approval)
+# Certificate revocation function (it requires multisig approval)
 def revoke_certificate(datum: VestingParams, multisig_datum: MultisigDatum, context: ScriptContext) -> None:
     # Ensure the certificate is valid before revocation
     assert datum.valid, "Certificate is already revoked"
