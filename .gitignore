@@ -1,6 +1,5 @@
 #**/assets/*
 
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm+all
 
@@ -67,6 +66,8 @@ atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
 .idea/replstate.xml
+
+**/form_submissions.json
 
 # SonarLint plugin
 .idea/sonarlint/
