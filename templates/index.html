@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CertifyCDNO</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <div class="container" >
+        {% include 'header.html' %}
+        <main>
+            <div class="content">
+                <h1>The Most Secure Way to Issue and Verify Certificates.</h1>
+                <p>Our blockchain-based certification application ensures the authenticity and tamper-proof nature of your certificates, building trust between issuers and recipients.</p>
+            </div>
+            <div class="buttons">
+                <a href="{{ url_for('create') }}" class="btn btn-primary">Create</a>
+                <a href="{{ url_for('verify') }}" class="btn btn-secondary">Verify</a>
+            </div>
+        </main>
+        <div class="prototype-tag">Prototype ! !</div>
+    </div>
+    <section class="why-choose">
+        <div class="image-container">
+            <div class="placeholder-image">
+                <img src="{{ url_for('static', filename='images/ind1.png') }}" alt="Logo">
+            </div>
+        </div>
+        <div class="text-content">
+            <h2>Why you should choose CertifyCDNO</h2>
+            <p>Unparalleled security and tamper-proof verification for your certificates. Streamlined workflows and effortless management for both issuers and recipients.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+        </div>
+    </section>
+    <section class="subscribe">
+        <div class="subscribe-content">
+            <h2>Start certifying now</h2>
+            <p>Join now with CertifyCDNO to get the latest news</p>
+            <form class="subscribe-form">
+                <input type="email" placeholder="Enter your email">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+</body>
+</html>

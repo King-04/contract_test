@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send ADA with Nami Wallet</title>
+    <script src="https://unpkg.com/@emurgo/cardano-serialization-lib-browser@10.0.1/cardano_serialization_lib.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Send ADA using Nami Wallet</h1>
+
+    <div>
+        <input type="text" id="recipient" placeholder="Recipient Address" required>
+        <input type="number" id="amount" placeholder="Amount in ADA" required>
+        <button onclick="sendADA()">Send ADA</button>
+    </div>
+
+    <script>
+        async function sendADA() {
+            try {
+                // Ensure Nami Wallet is installed
+                if (!window.cardano || !window.cardano.nami) {
+                    alert("Nami Wallet is not installed!");
+                    return;
+                }
+
+                // Enable the Nami Wallet
+                const nami = await window.cardano.nami.enable();
+
+                // Load Cardano serialization library
+                const Cardano = window.CardanoSerializationLib;
+
+                // Get the recipient address and amount from the user input
+                const recipient = document.getElementById('recipient').value;
+                const amount = document.getElementById('amount').value;
+
+                if (!recipient || !amount) {
+                    alert("Please enter both recipient address and amount.");
+                    return;
+                }
+
+                // Convert ADA amount to Lovelaces (1 ADA = 1,000,000 Lovelaces)
+                const lovelaces = BigInt(parseFloat(amount) * 1000000);
+
+                // Get user's UTXOs and change address
+                const utxosHex = await nami.getUtxos();
+                const utxos = utxosHex.map(utxo => Cardano.TransactionUnspentOutput.from_bytes(Buffer.from(utxo, "hex")));
+                const changeAddress = Cardano.Address.from_bech32(await nami.getChangeAddress());
+
+                // Create Transaction Builder
+                const txBuilder = Cardano.TransactionBuilder.new(
+                    Cardano.LinearFee.new(
+                        Cardano.BigNum.from_str('44'), // fee per byte
+                        Cardano.BigNum.from_str('155381') // fee constant
+                    ),
+                    Cardano.BigNum.from_str('1000000'), // minimum UTXO value
+                    Cardano.BigNum.from_str('500000000'), // pool deposit
+                    Cardano.BigNum.from_str('2000000') // key deposit
+                );
+
+                // Add recipient output
+                const outputAddress = Cardano.Address.from_bech32(recipient);
+                const output = Cardano.TransactionOutput.new(
+                    outputAddress,
+                    Cardano.Value.new(Cardano.BigNum.from_str(lovelaces.toString()))
+                );
+                txBuilder.add_output(output);
+
+                // Add UTXOs as inputs
+                for (let utxo of utxos) {
+                    txBuilder.add_input(
+                        utxo.output().address(),
+                        utxo.input(),
+                        utxo.output().amount()
+                    );
+                }
+
+                // Set change address
+                txBuilder.add_change_if_needed(changeAddress);
+
+                // Build the transaction
+                const txBody = txBuilder.build();
+                const tx = Cardano.Transaction.new(
+                    txBody,
+                    Cardano.TransactionWitnessSet.new()
+                );
+
+                // Sign and submit the transaction
+                const txHash = await nami.signTx(Buffer.from(tx.to_bytes()).toString('hex'), true);
+                alert(`Transaction submitted! TX Hash: ${txHash}`);
+            } catch (error) {
+                console.error(error);
+                alert("Transaction failed! Check the console for more details.");
+            }
+        }
+    </script>
+
+</body>
+</html>

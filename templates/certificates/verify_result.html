@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <title>Verification Result</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>Verification Result</h1>
+    <div class="why-choose">
+        <h2>Recipient ID: {{ recipient_id }}</h2>
+    {% if matches %}
+        <ul>
+        {% for match in matches %}
+            <li>
+                Certificate Name: {{ match.certificate_name }}<br>
+                Issue Date: {{ match.timestamp }}<br>
+                Entry ID: {{ match.entry_id }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No match found</p>
+    {% endif %}
+    <a href="{{ url_for('verify') }}">Verify Another</a>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

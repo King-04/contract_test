@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send ADA with Nami Wallet</title>
+    <link rel="stylesheet" href="./static/styles.css"> <!-- Your existing CSS file -->
+</head>
+<body>
+    <h1>Send ADA</h1>
+    <form id="recipientForm">
+<!--        <input type="text" id="address" placeholder="Add recipient address..." required>-->
+<!--        <input type="number" id="amount" placeholder="Amount in ADA" required>-->
+        <button type="button" id="connectWallet">Connect Nami Wallet</button>
+        <button type="submit" id="submitTx" disabled>Submit Tx</button>
+    </form>
+    <div id="result"></div>
+
+    <script src="{{ url_for('static', filename='recipient.js') }}"></script> <!-- Your JavaScript file -->
+</body>
+</html>
