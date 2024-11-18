@@ -437,3 +437,17 @@ footer {
 .icon-youtube:hover, .icon-twitter:hover, .icon-telegram:hover {
     opacity: 0.8;
 }
+
+.video-container {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 50px 50px 50px 350px;
+    color: #333;
+}
+
+.chip {
+    text-align: center
+}
+
