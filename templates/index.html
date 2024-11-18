@@ -47,16 +47,30 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/0xt3WzAO8iU?si=sCAoZg1uelMIw9Xc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
     </section>
-    <section class="subscribe">
-        <div class="subscribe-content">
-            <h2>Start certifying now</h2>
-            <p>Join now with CertifyCDNO to get the latest news</p>
-            <form class="subscribe-form">
-                <input type="email" placeholder="Enter your email">
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
+   <section class="faq-section">
+       <h2>FAQ</h2>
+       <details>
+           <summary>How do I issue a certificate on the platform?</summary>
+           <p>Connect your Nami Wallet, enter the certificate details and sign the transaction. Once the hash is submitted, a transaction ID will confirm successful issuance.</p>
+       </details>
+       <details>
+           <summary>What should I do if my transaction doesn’t immediately go through?</summary>
+           <p>Wait at least 20 seconds for the blockchain to process the block, then refresh and resubmit the transaction if needed.</p>
+       </details>
+       <details>
+           <summary>Can I verify a certificate without a Nami Wallet?</summary>
+           <p>No, you would need to connect a Nami wallet to be able to use the prototype. As the project progresses, other Cardano wallets would be accepted.</p>
+       </details>
+       <details>
+           <summary>How can I get test ADA into my wallet to test the prototype?</summary>
+           <p>You can obtain test ADA by connecting your wallet to a Cardano testnet faucet. Search for "Cardano testnet faucet" and follow the instructions.</p>
+       </details>
+       <details>
+           <summary>What happens if I lose the certificate hash after issuance?</summary>
+           <p>The hash is essential for verification. Without it, the certificate cannot be verified, so make sure to copy and securely store it after issuance.</p>
+       </details>
     </section>
+
 
     {% include 'footer.html' %}
 </body>

@@ -52,6 +52,10 @@ def create():
 def verify():
     return render_template('certificates/verify.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
