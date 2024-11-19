@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let connected = false;
     let recipientItem = null;
 
+    // Check if Nami Wallet is installed
+    if (!window.cardano || !window.cardano.nami) {
+        displayWalletError();
+    } else {
+        console.log("Nami Wallet detected!");
+        alert("Nami Wallet detected!");
+    }
+
     connectWalletButton.addEventListener('click', function () {
         if (!connected) {
             window.cardano.nami.enable().then(() => {
@@ -59,6 +67,27 @@ document.addEventListener('DOMContentLoaded', function() {
             popup.style.display = 'flex';
         });
     });
+
+    function displayWalletError() {
+    const errorMessage = document.createElement('div');
+    errorMessage.id = 'walletError';
+    errorMessage.style.position = 'fixed';
+    errorMessage.style.top = '0';
+    errorMessage.style.left = '0';
+    errorMessage.style.width = '100%';
+    errorMessage.style.padding = '15px';
+    errorMessage.style.backgroundColor = '#f8d7da';
+    errorMessage.style.color = '#721c24';
+    errorMessage.style.fontSize = '16px';
+    errorMessage.style.textAlign = 'center';
+    errorMessage.style.zIndex = '1000';
+    errorMessage.innerHTML = `
+        <strong>Nami Wallet not detected:</strong>
+        Please install the Nami Wallet extension to continue.
+        <a href="https://namiwallet.io/" target="_blank" style="color: #0056b3; text-decoration: underline;">Click here to download Nami Wallet</a>.
+    `;
+    document.body.appendChild(errorMessage);
+    }
 
     function prepareSender() {
         window.cardano.getUsedAddresses().then((senders) => {
@@ -116,3 +145,5 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     }
 });
+
+
