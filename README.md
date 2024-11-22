@@ -23,7 +23,7 @@ To run the project, you will need:
 - Python 3.8 or later.
 - Set up your dev environment to be able to use the PyCardano library with opshin for interacting with a smart contract on Cardano. Check out the [Opshin Starter Kit](https://github.com/OpShin/opshin-starter-kit) to get started.
 - Nami Wallet extension installed in your browser.
-- Access to the Cardano testnet through [Blockfrost](blockfrost.io)
+- Access to the Cardano testnet through [Blockfrost](https://blockfrost.io/)
 - Dependencies listed in `requirements.txt` and `package.json`
 
 ---
