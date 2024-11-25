@@ -63,6 +63,11 @@ python app.py
 
 ---
 
+### **Prototype**
+Test the prototype [HERE](https://certifycdno.onrender.com/)
+
+---
+
 ### **Contributing**
 We welcome contributions to improve the CertifyCDNO platform. Here’s how you can contribute:
 
